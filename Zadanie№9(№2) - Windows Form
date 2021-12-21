@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Zadanie_9__2_
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string text_box1 = textBox1.Text;
+            string text_box2 = textBox2.Text;
+            int k1 = int.Parse(text_box1);
+            int k2 = int.Parse(text_box2);
+
+            try
+            {
+                
+                string[] s = new[] { "congratulations", "adventures", "home", "satisfactory", "adequate" };
+                File.WriteAllLines("test.txt", s);
+                string[] data = File.ReadAllLines("test.txt");
+                foreach (string t in data)
+                {
+                    if (t.Length < k2)
+                        continue;
+                    textBox3.Text += ($"Исходная строка: {t}, измененная строка: {t.Substring(k1,k2-k1)}") + "\r\n";
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка. Введите корректно k1 и k2!");
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            textBox3.ScrollBars = ScrollBars.Vertical;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox3.Text = null;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
+}
